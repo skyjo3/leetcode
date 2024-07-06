@@ -42,4 +42,18 @@
  */
 var depthSum = function(nestedList) {
     
+    function getSum (nestedList, depth) {
+        let sum = 0
+        
+        for (let i = 0; i < nestedList.length; i++) {
+            if (nestedList[i].isInteger()) {
+                sum += (depth * nestedList[i].getInteger())
+            } else {
+                sum += getSum(nestedList[i].getList(), depth+1)
+            }
+        }
+        return sum
+    }
+
+    return getSum(nestedList, 1)
 };
