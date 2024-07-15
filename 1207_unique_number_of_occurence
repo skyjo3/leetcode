@@ -1,0 +1,28 @@
+class Solution {
+    func uniqueOccurrences(_ arr: [Int]) -> Bool {
+        var queue = [[arr[0],1]] // an array of [number, occurences]
+        for i in 1..<arr.count {
+            for j in 0..<queue.count {
+                let num = queue[j][0]
+                let occ = queue[j][1]
+                if arr[i] == num {
+                    queue[j] = [num, occ+1]
+                    break
+                }
+                // if no duplicate, append a new element with occ 1
+                if j == queue.count - 1 {
+                    queue.append([arr[i], 1])
+                }
+            }
+        }
+        print(queue)
+        for i in 0..<queue.count {
+            for j in i+1..<queue.count {
+                if queue[i][1] == queue[j][1] {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+}
