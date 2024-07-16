@@ -16,13 +16,10 @@ class Solution {
             }
 
             // 1. having the current element
-            var comb1 = comb
-            comb1.append(candidates[index])
-            dfs(index, total+candidates[index], comb1)
+            dfs(index, total+candidates[index], comb+[candidates[index]])
             // 2. not having the current element
             dfs(index+1, total, comb)
         }
         return res
     }
-    
 }
