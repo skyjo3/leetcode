@@ -27,7 +27,7 @@ class Solution {
         //     }
         // }
 
-        // Solution 2: Priority Queue
+        // Solution 2: Priority Queue & Array
         var distance = heights
         var distSum = 0
         var queue : [Int] = []
@@ -76,5 +76,34 @@ class Solution {
             maxVal = i
         }
         return maxVal
+        
+        // Solution 3: Heap
+        var queue : [Int] = []
+        var l = ladders
+        var b = bricks
+
+        for i in 1..<heights.count {
+            
+            let diff = heights[i] - heights[i-1]
+            
+            if diff <= 0 {
+                continue
+            }
+
+            queue.append(diff)
+            queue.sort { $0 > $1 }
+            
+            b -= diff
+            if b < 0 {
+                if l > 0 {
+                    let extraBricks = queue.removeFirst()
+                    b += extraBricks
+                    l -= 1
+                } else {
+                    return i-1
+                }
+            }
+        }
+        return heights.count - 1
     }
 }
