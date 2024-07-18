@@ -39,14 +39,14 @@ class Solution {
                 if abbrArr[i] == wordArr[wordIndex] { i += 1; wordIndex += 1; continue }
                 else { return false }
             }
-            let val = getNumber(abbrArr, i)
+            let (val, c) = getNumber(abbrArr, i)
             if val > wordArr.count { return false }
             
             switch val {
                 case ...0: return false
                 case 1...9: wordIndex += (val-1)
-                case 10...20: i += 1; wordIndex += (val-1)
-                default: print(""); return false
+                case 10...: i += c; wordIndex += (val-1)
+                default: print("ya"); return false
             }
             i += 1
             wordIndex += 1
@@ -57,15 +57,19 @@ class Solution {
         return false
     }
 
-    func getNumber (_ abbrArr: [Character], _ index: Int) -> Int {
-        let n = Int(String(abbrArr[index])) ?? 0
-        if index != abbrArr.count - 1 {
-            let num2 = abbrArr[index+1]
-            if num2.isNumber {
-                let n2 = Int(String(num2)) ?? 0
-                return n*10 + n2
-            }
+    func getNumber (_ abbrArr: [Character], _ index: Int) -> (Int, Int) {
+        var n = Int(String(abbrArr[index])) ?? 0
+        if n == 0 { return (-1, 0) }
+        var count = 0
+        var i = index
+        while i != abbrArr.count - 1 {
+            let num2 = abbrArr[i+1]
+            if !num2.isNumber { break }
+            let n2 = Int(String(num2)) ?? 0
+            n = n*10 + n2
+            count += 1
+            i += 1
         }
-        return n
+        return (n, count)
     }
 }
