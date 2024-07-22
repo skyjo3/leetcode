@@ -3,7 +3,7 @@
  * @return {number}
  */
 var maxProfit = function(prices) {
-    
+		// Solution 1: Queue
     function getQueue(prices) {
         var min = prices[0]
         var l_index = 0
