@@ -1,3 +1,23 @@
+// 2nd Attempt: Shorter Version
+class Solution {
+    func generateParenthesis(_ n: Int) -> [String] {
+        var res : [String] = []
+        recursion("", n, n, &res)
+        return res
+    }
+    func recursion (_ str: String, _ qL: Int,_ qR: Int,_ res: inout[String]) { 
+      // print(str, qL, qR, res)
+        if qL == 0 && qR == 0 { res.append(str) }
+      if qL > 0 {
+        recursion(str+"(", qL-1, qR, &res)
+      }
+        if qL < qR && qR != 0 {
+        recursion(str+")", qL, qR-1, &res)
+      }
+    }
+}
+
+// First Solution
 class Solution {
     func generateParenthesis(_ n: Int) -> [String] {
         var arr: [String] = ["("]

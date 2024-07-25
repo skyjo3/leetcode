@@ -1,0 +1,56 @@
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function(prices) {
+		// Solution 1: Queue
+    function getQueue(prices) {
+        var min = prices[0]
+        var l_index = 0
+        var queue_profit = [0]
+
+        for (let i=1; i<prices.length; i++) {
+            if (prices[i] < min) {
+                min = prices[i]
+                l_index = i
+                queue_profit.push(0)
+                continue
+            }
+            var profit = prices[i] - prices[l_index]
+            queue_profit.push(profit)
+        }
+        return queue_profit
+    }
+
+    let queue_profit = getQueue(prices)
+    let max = getMax(0, queue_profit, 0)
+    
+    function getMax (max, queue_profit, index) {
+        let queue = queue_profit
+        if (index >= queue.length) {
+            return max
+        }
+        if (queue[index] <= max) {
+            // continue
+            return getMax(max, queue, index+1)
+        }
+        
+        // if we don't sell it now
+        max = queue[index]
+        let max1 = getMax(max, queue, index+1)
+        
+        // if we sell it now
+        let remainingQueue = queue.slice(index+1, queue.length)
+        let newQueue = getQueue(remainingQueue)
+        // console.log(newQueue)
+        let max2 = max + getMax(0, newQueue, 0)
+        
+        // compare the results and return
+        if (max1 < max2) {
+            return max2
+        }
+        return max1
+    }
+
+    return max
+};
