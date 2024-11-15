@@ -1,0 +1,26 @@
+class Solution {
+		func findLengthOfShortestSubarray(_ arr: [Int]) -> Int {
+        var l = 0
+        var r = arr.count - 1
+
+        while (l<r && arr[l] <= arr[l+1]) {
+            l += 1
+        }
+        if l == r { return 0 }
+
+        var minVal = r-l // remove the whole right part
+
+        while (l>=0) {
+            while (arr[r-1] <= arr[r] && (arr[l] <= arr[r-1] || l == 0)) {
+                r -= 1
+            }
+            var border = 0
+            if arr[l] <= arr[r] {
+                border = 1
+            }
+            minVal = min(minVal, r-l-border)
+            l -= 1
+        }
+        return minVal
+    }
+}
